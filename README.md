@@ -2,64 +2,58 @@
 
 ## Project Overview
 
-This repository hosts the development version of the **Group-specific Structural Topic Model (gSTM)**, an extension of the **Structural Topic Model (STM)** designed for topic modeling with covariates. The **gSTM** incorporates group-specific structures, allowing for more nuanced analysis of text data by accounting for both covariates and group-specific characteristics.
+The **Group-specific Structural Topic Model (gSTM)** is an R package designed to extend the Structural Topic Model (STM) by introducing group-specific structures. This model allows for the estimation of topics with covariates and group-specific characteristics, enabling more detailed and flexible topic modeling.
 
-This project is inspired by the foundational work done on the **`stm`** R package by **Molly Roberts, Brandon Stewart, and Dustin Tingley**. We extend their concepts to incorporate group-specific modifications, improving the flexibility and specificity of the topic modeling process.
-
-For more information on the original STM model, visit [www.structuraltopicmodel.com](http://www.structuraltopicmodel.com).
+This project is inspired by the original **`stm`** R package developed by **Molly Roberts, Brandon Stewart, and Dustin Tingley**, and builds upon their foundational work by incorporating group-specific extensions.
 
 ## Key Features
 
-- **Group-Specific Topic Modeling**: Enhances the original STM to allow for group-specific topics and covariate effects.
-- **Text Data Ingestion**: Tools for preprocessing and managing text data for topic modeling.
-- **Covariate and Group Effects on Topics**: Explore the combined influence of covariates and group structures on topic prevalence and content, with uncertainty quantification.
-- **Visualization Tools**: Generate comprehensive visualizations, including topic correlation graphs and group-specific topic models.
+- **Group-Specific Topic Modeling**: Extends the Structural Topic Model by allowing for group-specific covariate effects on topics.
+- **Text Data Processing**: Provides tools for ingesting and preprocessing text data.
+- **Covariate and Group Effects on Topics**: Explore how covariates and group structures influence topic prevalence and content.
+- **Visualization Tools**: Functions for visualizing group-specific topics, topic correlations, and covariate effects.
 
 ## Credit and Acknowledgements
 
-This project draws heavily from the original **`stm` R package**. Full credit for the original STM model goes to:
+This project is built on the concepts of the **`stm`** package, developed by:
 - **Molly Roberts** (Harvard University)
 - **Brandon Stewart** (Princeton University)
 - **Dustin Tingley** (Harvard University)
 
-For inquiries related to the original **STM** package, please contact **Brandon Stewart** at **bms4 [AT] princeton.edu**.
-
-My name is **Pronob Kumar Barman**, and this repository is an implementation and extension of their work. You can find this project under my GitHub account **[pronob29](https://github.com/pronob29/gstm)**.
+This repository is maintained by **Pronob Kumar Barman**, and it can be found on GitHub under **[pronob29/gstm](https://github.com/pronob29/gstm)**.
 
 ## Installation
 
-To get started, follow the steps below:
+To install and use the **gSTM** package, follow these steps:
 
-1. Ensure R is installed on your system. If not, download it from [http://www.r-project.org/](http://www.r-project.org/).
-2. Install the CRAN version of the original `stm` package:
+1. First, ensure that **R** is installed on your system. You can download it from [https://www.r-project.org/](https://www.r-project.org/).
 
-```r
-install.packages("stm")
-```
+2. Install the **gSTM** package directly from GitHub using the following commands:
 
-3. Install the development version of the gSTM package from this GitHub repository using `devtools`. First, install `devtools`:
+    ```r
+    if(!require(devtools)) install.packages("devtools")
+    devtools::install_github("pronob29/gstm")
+    ```
 
-```r
-if(!require(devtools)) install.packages("devtools")
-```
-
-Then install gSTM:
-
-```r
-library(devtools)
-install_github("pronob29/gstm", dependencies=TRUE)
-```
-
-4. This will install the package and its required dependencies.
+3. This will install **gSTM** along with any required dependencies.
 
 ## Getting Started
 
-To begin using **gSTM**, explore the primary function `gstm()` for estimating group-specific structural topic models. You can preprocess raw text data using `textProcessor()` or ingest term-document matrices with `readCorpus()`.
+Once installed, you can start using the **gSTM** package for your topic modeling needs. Below is an example to get you started:
 
-Refer to the vignette for a detailed walkthrough of example analyses and further documentation on how to use this package.
+```r
+library(gstm)
 
-## Contribution
+# Preprocess text data
+processed_data <- textProcessor(documents = your_raw_text_data)
 
-We welcome contributions and suggestions to further improve **gSTM**. Please feel free to open issues or submit pull requests on this repository to help enhance the implementation.
+# Fit the group-specific structural topic model
+gstm_model <- gstm(documents = processed_data$documents, 
+                   vocab = processed_data$vocab, 
+                   K = 20, 
+                   prevalence = ~ covariates, 
+                   groups = your_group_variable)
 
-Thank you for using **gSTM**!
+# Summarize and visualize the model
+summary(gstm_model)
+plot(gstm_model)
